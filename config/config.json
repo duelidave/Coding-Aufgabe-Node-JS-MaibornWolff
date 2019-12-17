@@ -1,0 +1,16 @@
+{
+    "app" : {
+        "port" : 8080,
+        "download_weather_data" : true,
+        "interval" : 3600000,
+        "interval_comment" : "1000 * 60 * 60"
+    },
+    "openweather" : {
+        "uri" : "https://api.openweathermap.org/data/2.5/weather",
+        "appid" : "b28c8d7b19e593069af9b28f740805bc"
+    },
+    "db" : {
+        "type" : "sqlite",
+        "database" : "./db/db.sqlite3"
+    }
+}

@@ -1,15 +1,19 @@
-# Lösung
+# Lösung Coding Challenge
 
 In diesem Repro befindet sich meine Lösung zur 'Coding-Aufgabe Node.js' (https://www.maibornwolff.de/coding-challenge-node-js).
-Die Anwendung kann mit 'node index.js' gestartet werden.
-Bsp. Request 'http://localhost:8080/weather?city=Munich&month=2019-12'
+Die Anwendung kann mit folgendem Befehl gestartet werden:
+```
+node index.js
+```
+
+- Bsp. Request 'http://localhost:8080/weather?city=Munich&month=2019-12'
 
 ## Anmerkungen von David Müller
 - In der Datei 'config/cities.ts' sind aktuell alle Städt konfiguriert, die über die API abgefragt werden können.
-- Meine Sqlite3 mit ein paar Testdaten habe ich zu Demozwecken hinzugefügt. (Hier wäre auch ein Seed-Script möglich gewesen)
+- Meine Sqlite3 Datenbank mit einigen Testdaten habe ich zu Demozwecken hinzugefügt. (Hier ist natürlich auch ein Seed-Script möglich)
 - Auslieferung über http2 gestaltet sich in Kombination mit Express / Node JS aktuell etwas schwierig. 
   Hier ist die Situation für mich unklar. Ich wollte nicht zu viel Zeit in ein Problem investieren, dass wahrscheinlich auf Node.js / Express Seite besteht.
-  Ich habe folgende Möglichkeiten ausprobiert und bin zu keine vorzeigbaren Ergebnis gekommen:
+  Ich habe folgende Möglichkeiten ausprobiert und bin zu keinem vorzeigbaren Ergebnis gekommen:
     - spdy
     - http2 mit express-http2-workaround
 

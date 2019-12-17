@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const model_1 = require("./model");
 const cities_1 = require("../config/cities");
 exports.controller = (weatherRepository) => {
-    const weather = model_1.model(weatherRepository);
     let myLogger = require("./../config/winston");
+    let weather = model_1.model(weatherRepository);
     return {
         async getAction(req, res) {
             const { city, day, month } = req.query;

@@ -2,16 +2,25 @@
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 const express_1 = __importDefault(require("express"));
 const weather_model_1 = require("./weather/weather.model");
 const weather_1 = require("./weather");
 const get_weather_data_1 = require("./get-weather-data");
+const fs = __importStar(require("fs"));
 (async function main() {
     let config = require("./config/config.json");
     let myLogger = require("./config/winston");
     let winston = require("winston");
+    let https = require('https');
     let expressWinston = require("express-winston");
     let options = {
         type: config.db.type,
@@ -39,7 +48,11 @@ const get_weather_data_1 = require("./get-weather-data");
         ]
     }));
     //TODO: David Mueller - http2 Server
-    app.listen(config.app.port, function () {
+    https.createServer({
+        key: fs.readFileSync('cert/privateKey.key'),
+        cert: fs.readFileSync('cert/certificate.crt')
+    }, app)
+        .listen(config.app.port, function () {
         myLogger.info("Express server started on port " + config.app.port);
     });
 })();

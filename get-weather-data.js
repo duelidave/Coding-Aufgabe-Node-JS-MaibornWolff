@@ -6,7 +6,6 @@ let config = require("./config/config.json");
 let requestPromise = require("request-promise");
 function fetchWeatherData(weatherRepository) {
     return () => {
-        myLogger.info("executing fetchWeatherData");
         for (let city in cities_1.Cities) {
             if (!isNaN(Number(city))) {
                 continue;
@@ -21,7 +20,6 @@ function fetchWeatherData(weatherRepository) {
                 .then(async function (response) {
                 if (response) {
                     try {
-                        myLogger.info("saving entity");
                         await weatherRepository.save(weatherRepository.create({
                             city: city,
                             temp: response.main.temp,

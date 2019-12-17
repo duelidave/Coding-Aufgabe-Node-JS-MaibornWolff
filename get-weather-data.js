@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const cities_1 = require("./config/cities");
-let myLogger = require("./config/winston");
+let logger = require("./logger/app");
 let config = require("./config/config.json");
 let requestPromise = require("request-promise");
 function fetchWeatherData(weatherRepository) {
@@ -15,7 +15,7 @@ function fetchWeatherData(weatherRepository) {
                 uri: uri,
                 json: true
             };
-            myLogger.info("requesting data from openweather API: " + uri);
+            logger.info("requesting data from openweather API: " + uri);
             requestPromise(options)
                 .then(async function (response) {
                 if (response) {
@@ -27,12 +27,12 @@ function fetchWeatherData(weatherRepository) {
                         }));
                     }
                     catch (e) {
-                        myLogger.error("could not insert new Weather Entity into database." + e.stack);
+                        logger.error("could not insert new Weather Entity into database." + e.stack);
                     }
                 }
             })
                 .catch(function (err) {
-                myLogger.error("error downloading data from openweather: " + err);
+                logger.error("error downloading data from openweather: " + err);
             });
         }
     };

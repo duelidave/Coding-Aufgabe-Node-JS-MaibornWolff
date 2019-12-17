@@ -3,12 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const model_1 = require("./model");
 const cities_1 = require("../config/cities");
 exports.controller = (weatherRepository) => {
-    let myLogger = require("./../config/winston");
+    let logger = require("../logger/app");
     let weather = model_1.model(weatherRepository);
     return {
         async getAction(req, res) {
             const { city, day, month } = req.query;
-            myLogger.info("getAction for city " + city + " day = " + day + " month = " + month);
+            logger.info("getAction for city " + city + " day = " + day + " month = " + month);
             if (!city) {
                 res.status(400)
                     .send("Bad request");

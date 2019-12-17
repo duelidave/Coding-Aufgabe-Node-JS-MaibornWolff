@@ -8,7 +8,7 @@ import * as fs from "fs";
 (async function main ()
 {
     let config = require("./config/config.json");
-    let myLogger = require("./config/winston");
+    let logger = require("./logger/app");
     let winston = require("winston");
     let https = require('https')
     let expressWinston = require("express-winston");
@@ -25,13 +25,13 @@ import * as fs from "fs";
     
     if (config.app.download_weather_data)
     {
-        myLogger.info("setting interval");
+        logger.error("setting interval = " + config.app.interval);
         setInterval(fetchWeatherData(weatherRepository), config.app.interval);
     }
     
     const app: express.Application = express();
     
-    app.use(require("morgan")("combined", {stream: myLogger.stream}));
+    app.use(require("morgan")("combined", {stream: require("./logger/access").stream}));
     app.use("/weather", weatherRouter(weatherRepository));
     
     app.use(expressWinston.errorLogger({
@@ -52,6 +52,6 @@ import * as fs from "fs";
                        }, app)
          .listen(config.app.port, function ()
     {
-        myLogger.info("Express server started on port " + config.app.port);
+        logger.info("Express server started on port " + config.app.port);
     });
 })();

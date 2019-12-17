@@ -6,7 +6,7 @@ Die Anwendung kann mit folgendem Befehl gestartet werden:
 node index.js
 ```
 
-- Bsp. Request 'http://localhost:8080/weather?city=Munich&month=2019-12'
+- Bsp. Request 'https://localhost:8080/weather?city=Munich&month=2019-12'
 
 ## Anmerkungen von David Müller
 - In der Datei 'config/cities.ts' sind aktuell alle Städt konfiguriert, die über die API abgefragt werden können.

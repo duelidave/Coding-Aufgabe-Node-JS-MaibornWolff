@@ -2,7 +2,7 @@ import {Cities} from "./config/cities";
 import {Weather, WeatherResponse} from "./weather/weather.model";
 import {Repository} from "typeorm";
 
-let myLogger = require("./config/winston");
+let logger = require("./logger/app");
 let config = require("./config/config.json");
 let requestPromise = require("request-promise");
 
@@ -23,7 +23,7 @@ export function fetchWeatherData (weatherRepository: Repository<Weather>)
                 json: true
             };
             
-            myLogger.info("requesting data from openweather API: " + uri);
+            logger.info("requesting data from openweather API: " + uri);
             
             requestPromise(options)
                 .then(async function (response: WeatherResponse)
@@ -40,14 +40,13 @@ export function fetchWeatherData (weatherRepository: Repository<Weather>)
                               }
                               catch (e)
                               {
-                                  myLogger.error("could not insert new Weather Entity into database." + e.stack);
+                                  logger.error("could not insert new Weather Entity into database." + e.stack);
                               }
-                        
                           }
                       })
                 .catch(function (err: any)
                        {
-                           myLogger.error("error downloading data from openweather: " + err);
+                           logger.error("error downloading data from openweather: " + err);
                        });
         }
     };

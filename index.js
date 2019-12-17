@@ -18,7 +18,7 @@ const get_weather_data_1 = require("./get-weather-data");
 const fs = __importStar(require("fs"));
 (async function main() {
     let config = require("./config/config.json");
-    let myLogger = require("./config/winston");
+    let logger = require("./logger/app");
     let winston = require("winston");
     let https = require('https');
     let expressWinston = require("express-winston");
@@ -31,11 +31,11 @@ const fs = __importStar(require("fs"));
     const connection = await typeorm_1.createConnection(options);
     const weatherRepository = connection.getRepository(weather_model_1.Weather);
     if (config.app.download_weather_data) {
-        myLogger.info("setting interval");
+        logger.error("setting interval = " + config.app.interval);
         setInterval(get_weather_data_1.fetchWeatherData(weatherRepository), config.app.interval);
     }
     const app = express_1.default();
-    app.use(require("morgan")("combined", { stream: myLogger.stream }));
+    app.use(require("morgan")("combined", { stream: require("./logger/access").stream }));
     app.use("/weather", weather_1.router(weatherRepository));
     app.use(expressWinston.errorLogger({
         transports: [
@@ -53,6 +53,6 @@ const fs = __importStar(require("fs"));
         cert: fs.readFileSync('cert/certificate.crt')
     }, app)
         .listen(config.app.port, function () {
-        myLogger.info("Express server started on port " + config.app.port);
+        logger.info("Express server started on port " + config.app.port);
     });
 })();

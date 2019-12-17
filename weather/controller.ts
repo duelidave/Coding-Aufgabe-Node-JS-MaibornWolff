@@ -6,14 +6,14 @@ import {Cities} from "../config/cities";
 
 export const controller = (weatherRepository: Repository<Weather>) =>
 {
-    let myLogger = require("./../config/winston");
+    let logger = require("../logger/app");
     let weather = model(weatherRepository);
     
     return {
         async getAction (req: express.Request, res: express.Response)
         {
             const {city, day, month} = req.query;
-            myLogger.info("getAction for city " + city + " day = " + day + " month = " + month);
+            logger.info("getAction for city " + city + " day = " + day + " month = " + month);
             
             if (!city)
             {

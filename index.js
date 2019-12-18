@@ -28,7 +28,7 @@ const fs = __importStar(require("fs"));
         entities: [weather_model_1.Weather],
         logging: true
     };
-    const connection = await typeorm_1.createConnection(options);
+    let connection = await typeorm_1.createConnection(options);
     const weatherRepository = connection.getRepository(weather_model_1.Weather);
     if (config.app.download_weather_data) {
         logger.error("setting interval = " + config.app.interval);

@@ -1,6 +1,7 @@
 import {Between, Repository} from "typeorm";
 import {Weather} from "./weather.model";
 import {endOfDay, endOfMonth, startOfDay, startOfMonth} from "date-fns";
+import {logger} from "express-winston";
 
 export const model = (weatherRepository: Repository<Weather>) => (
     {
@@ -43,15 +44,23 @@ export const model = (weatherRepository: Repository<Weather>) => (
 
 function calculateAvgWeather (weathers: Weather[], city: string)
 {
-    if (weathers != null && weathers.length == 0)
+    if (weathers == null || weathers.length == 0)
     {
         return [];
     }
     
-    const sumHumidity = weathers.reduce((prev, current) => prev + current.humidity, 0);
-    const sumTemp = weathers.reduce((prev, curr) => prev + curr.temp, 0);
-    const avgHumidity = (sumHumidity / weathers.length) || 0;
-    const avgTemp = (sumTemp / weathers.length) || 0;
+    try
+    {
+        const sumHumidity = weathers.reduce((prev, current) => prev + current.humidity, 0);
+        const sumTemp = weathers.reduce((prev, curr) => prev + curr.temp, 0);
+        const avgHumidity = (sumHumidity / weathers.length) || 0;
+        const avgTemp = (sumTemp / weathers.length) || 0;
     
-    return new Weather(city, avgTemp, avgHumidity);
+        return new Weather(city, avgTemp, avgHumidity);
+    }
+    catch (_)
+    {
+        return [];
+    }
+    
 }

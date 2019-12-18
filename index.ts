@@ -20,7 +20,7 @@ import * as fs from "fs";
         logging: true
     };
     
-    const connection = await createConnection(options);
+    let connection = await createConnection(options);
     const weatherRepository = connection.getRepository(Weather);
     
     if (config.app.download_weather_data)

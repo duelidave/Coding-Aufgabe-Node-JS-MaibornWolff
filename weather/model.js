@@ -30,12 +30,17 @@ exports.model = (weatherRepository) => ({
     }
 });
 function calculateAvgWeather(weathers, city) {
-    if (weathers != null && weathers.length == 0) {
+    if (weathers == null || weathers.length == 0) {
         return [];
     }
-    const sumHumidity = weathers.reduce((prev, current) => prev + current.humidity, 0);
-    const sumTemp = weathers.reduce((prev, curr) => prev + curr.temp, 0);
-    const avgHumidity = (sumHumidity / weathers.length) || 0;
-    const avgTemp = (sumTemp / weathers.length) || 0;
-    return new weather_model_1.Weather(city, avgTemp, avgHumidity);
+    try {
+        const sumHumidity = weathers.reduce((prev, current) => prev + current.humidity, 0);
+        const sumTemp = weathers.reduce((prev, curr) => prev + curr.temp, 0);
+        const avgHumidity = (sumHumidity / weathers.length) || 0;
+        const avgTemp = (sumTemp / weathers.length) || 0;
+        return new weather_model_1.Weather(city, avgTemp, avgHumidity);
+    }
+    catch (_) {
+        return [];
+    }
 }
